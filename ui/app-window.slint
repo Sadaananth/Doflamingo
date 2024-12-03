@@ -1,18 +1,72 @@
-import { Button, VerticalBox } from "std-widgets.slint";
+import { DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
 
-export component AppWindow inherits Window {
-    in-out property <int> counter: 42;
-    callback request-increase-value();
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
+component SalaryTab inherits Rectangle {
+    width: 800px;
+    height: 600px;
+
+    date-picker := DatePickerPopup {
+        width: 360px;
+        height: 524px;
+        close-on-click: false;
+
+        accepted(date) => {
+            date-picker.close();
+        }
+    }
+
+    HorizontalLayout { 
+        date := TextInput {
+            width: 60px;
+            height: 60px;
+            text: "Date";
+            accepted => {
+                date_picker.show();
+            }
         }
 
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
-            }
+        amount := TextInput {
+            width: 60px;
+            height: 60px;
+            text: "Amount";
+        }
+
+        add := Button {
+            width: 60px;
+            height: 60px;
+            text: "Add";
+        }
+    }
+}
+
+component HomeView inherits Rectangle {
+    width: 800px;
+    height: 600px;
+
+    callback enter_salary();
+
+    Button {
+        width: 100px;
+        height: 50px;
+        text: "Enter Salary";
+
+        clicked => {
+            parent.enter_salary();
+        }
+    }
+}
+
+export component AppWindow inherits Window {
+    width: 800px;
+    height: 600px;
+
+    salary := SalaryTab {
+        visible: false;
+    }
+
+    homeview := HomeView {
+        enter_salary => {
+            self.visible = false;
+            salary.visible = true;
         }
     }
 }
