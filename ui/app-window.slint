@@ -14,13 +14,17 @@ component SalaryTab inherits Rectangle {
         }
     }
 
-    HorizontalLayout { 
-        date := TextInput {
-            width: 60px;
-            height: 60px;
-            text: "Date";
-            accepted => {
-                date_picker.show();
+    HorizontalLayout {
+        Rectangle {
+            TextInput {
+                width: 60px;
+                height: 60px;
+                text: "Date";
+            }
+            TouchArea {
+                clicked => {
+                    date_picker.show();
+                }
             }
         }
 
