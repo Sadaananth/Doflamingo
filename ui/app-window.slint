@@ -8,18 +8,22 @@ component SalaryTab inherits Rectangle {
         width: 360px;
         height: 524px;
         close-on-click: false;
+        title: "Select the date of Salary";
+        // TODO: Set starting date
 
         accepted(date) => {
             date-picker.close();
+            date_text.text = "closed";
         }
     }
 
     HorizontalLayout {
         Rectangle {
-            TextInput {
+            height: 60px;
+            date_text := TextInput {
                 width: 60px;
                 height: 60px;
-                text: "Date";
+                text: "DD/MM/YYYY";
             }
             TouchArea {
                 clicked => {
@@ -29,13 +33,11 @@ component SalaryTab inherits Rectangle {
         }
 
         amount := TextInput {
-            width: 60px;
             height: 60px;
             text: "Amount";
         }
 
         add := Button {
-            width: 60px;
             height: 60px;
             text: "Add";
         }
