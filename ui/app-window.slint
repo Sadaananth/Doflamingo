@@ -1,17 +1,26 @@
-import { DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
+import { Date, DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
+
+export global Data {
+    in-out property <int> today: 23;
+    in-out property <int> this_month: 12;
+    in-out property <int> this_year: 2001;
+}
 
 component SalaryTab inherits Rectangle {
     width: 800px;
     height: 600px;
 
+
     callback add_salary(string, int);
 
     date-picker := DatePickerPopup {
+        property <Date> test_date;
+        
         width: 360px;
         height: 524px;
         close-on-click: false;
         title: "Select the date of Salary";
-        // TODO: Set starting date
+        date: test_date;
 
         accepted(date) => {
             date-picker.close();
