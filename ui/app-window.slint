@@ -10,7 +10,6 @@ component SalaryTab inherits Rectangle {
     width: 800px;
     height: 600px;
 
-
     callback add_salary(string, int);
 
     date-picker := DatePickerPopup {
@@ -20,7 +19,7 @@ component SalaryTab inherits Rectangle {
         height: 524px;
         close-on-click: false;
         title: "Select the date of Salary";
-        date: test_date;
+        // date: test_date;
 
         accepted(date) => {
             date-picker.close();
