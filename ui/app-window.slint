@@ -76,19 +76,111 @@ component SalaryTab inherits Rectangle {
     }
 }
 
+
+component DebtTab inherits Rectangle {
+    width: 800px;
+    height: 600px;
+
+    callback add_debt();
+
+    VerticalLayout {
+        Button {
+            width: 100px;
+            height: 100px;
+            text: "Add Debts";
+
+            clicked => {
+                show_entry.visible = true;
+            }
+        }
+
+        show_entry := Rectangle {
+            visible: true;
+            HorizontalLayout {
+                Rectangle {
+                    width: 60px;
+                    height: 60px;
+                    start_date := TextInput {
+                        width: 60px;
+                        height: 60px;
+                        text: "DD/MM/YYYY";
+                    }
+                    TouchArea {
+                        clicked => {
+                            //date_picker.show();
+                        }
+                    }
+                }
+
+                Rectangle {
+                    width: 60px;
+                    height: 60px;
+                    end_date := TextInput {
+                        width: 60px;
+                        height: 60px;
+                        text: "DD/MM/YYYY";
+                    }
+                    TouchArea {
+                        clicked => {
+                            //date_picker.show();
+                        }
+                    }
+                }
+
+                amount := TextInput {
+                    width: 60px;
+                    height: 60px;
+                    text: "Amount";
+                }
+
+                interest := TextInput {
+                    width: 60px;
+                    height: 60px;
+                    text: "interest";
+                }
+                
+                tag := TextInput {
+                    width: 60px;
+                    height: 60px;
+                    text: "interest";         
+                }
+
+                description := TextInput {
+                    width: 60px;
+                    height: 60px;
+                    text: "description";         
+                }
+            }
+        }
+    }
+}
+
 component HomeView inherits Rectangle {
     width: 800px;
     height: 600px;
 
     callback enter_salary();
+    callback enter_debt();
 
-    Button {
-        width: 100px;
-        height: 50px;
-        text: "Enter Salary";
+    GridLayout {
+        spacing: 100px;
+        Button {
+            width: 100px;
+            height: 100px;
+            text: "Enter Salary";
 
-        clicked => {
-            parent.enter_salary();
+            clicked => {
+                root.enter_salary();
+            }
+        }
+        Button {
+            width: 100px;
+            height: 100px;
+            text: "Debt";
+
+            clicked => {
+                root.enter_debt();
+            }
         }
     }
 }
@@ -107,10 +199,19 @@ export component AppWindow inherits Window {
         }
     }
 
+    debt := DebtTab {
+        visible: false;
+    }
+
     homeview := HomeView {
         enter_salary => {
             self.visible = false;
             salary.visible = true;
+        }
+
+        enter_debt => {
+            self.visible = false;
+            debt.visible =  true;
         }
     }
 }
