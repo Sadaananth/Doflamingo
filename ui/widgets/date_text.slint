@@ -1,0 +1,36 @@
+import { Date, DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
+
+export component DateText inherits Rectangle {
+    Rectangle {
+        height: 60px;
+        date_text := TextInput {
+            width: 60px;
+            height: 60px;
+            text: "DD/MM/YYYY";
+        }
+        TouchArea {
+            clicked => {
+                date_picker.show();
+            }
+        }
+    }
+    date-picker := DatePickerPopup {
+        property <Date> test_date;
+
+        visible: false;
+
+        // x:  date_text.x + date-text.width;
+        // y: date-text.y;
+       
+        width: 360px;
+        height: 524px;
+        close-on-click: false;
+        title: "Select the date of Salary";
+        // date: test_date;
+
+        accepted(date) => {
+            date-picker.close();
+            date_text.text =  date.day + "//" + date.month + "//" + date.year;
+        }
+    }
+}

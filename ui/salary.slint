@@ -1,0 +1,45 @@
+import { Date, DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
+import {DateText} from "widgets/date_text.slint";
+
+export component SalaryTab inherits Rectangle {
+    width: 800px;
+    height: 600px;
+
+    callback add_salary(string, int);
+
+    VerticalLayout {
+        Rectangle {
+            Button {
+                text: "<-";
+                y: 0px;
+                x: 0px;
+                width: 60px;
+                height: 60px;
+            }
+            Button {
+                text: "save";
+                y: 0px;
+                x: parent.width - 60px;
+                width: 60px;
+                height: 60px;
+
+                clicked => {
+                    root.add_salary("1234", 1234);
+                }
+            }
+        }
+        HorizontalLayout {
+            DateText {}
+
+            amount := TextInput {
+                height: 60px;
+                text: "Amount";
+            }
+
+            add := Button {
+                height: 60px;
+                text: "Add";
+            }
+        }
+    }
+}

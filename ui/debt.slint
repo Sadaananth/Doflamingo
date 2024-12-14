@@ -1,0 +1,102 @@
+import { Date, DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
+import {DateText} from "widgets/date_text.slint";
+
+
+export component DebtTab inherits Rectangle {
+    width: 800px;
+    height: 600px;
+
+    callback add_debt();
+
+    VerticalLayout {
+        spacing: 10px;
+        Rectangle {
+            width: 110px;
+            height: 25px;
+            background: blue;
+            border-radius: 15px;
+
+            property <bool> adding;
+            add_debt_text:= Text {
+                text: "Add New Debts";
+            }
+            TouchArea {
+                clicked => {
+                    if(adding) {
+                        add_debt_text.text = "Add New Debts";
+                    } else {
+                        add_debt_text.text = "Collapse";
+                    }
+                    adding =  !adding;
+                    show_entry.visible = adding;
+                }
+            }
+        }
+
+        
+        show_entry := Rectangle {
+            visible: true;
+            
+            border-color: grey;
+            border-width: 1px;
+
+            HorizontalLayout {
+                alignment: start;
+                spacing: 5px;
+                height: 60px;
+                DateText {}
+
+                DateText {}
+
+                Rectangle {
+                    border-width: 1px;
+                    border-color: grey;
+                    background: grey;
+                    border-radius: 2px;
+                    width: 60px;
+                    amount := TextInput {
+                        text: "Amount";
+                    }
+                }
+
+                Rectangle {
+                    border-width: 1px;
+                    border-color: grey;
+                    background: grey;
+                    border-radius: 2px;
+                    width: 60px;
+                    interest := TextInput {
+                        width: 60px;
+                        height: 60px;
+                        text: "interest";
+                    }
+                }
+                
+                Rectangle {
+                    border-width: 1px;
+                    border-color: grey;
+                    background: grey;
+                    border-radius: 2px;
+                    width: 60px;
+                    tag := TextInput {
+                        text: "interest";         
+                    }
+                }
+
+                Rectangle {
+                    border-width: 1px;
+                    border-color: grey;
+                    background: grey;
+                    border-radius: 2px;
+                    width: 70px;
+                    description := TextInput {
+                        text: "description";
+                    }         
+                }
+                Button {
+                    text: "save";
+                }
+            }
+        }
+    }
+}
