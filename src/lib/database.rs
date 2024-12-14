@@ -32,9 +32,21 @@ pub mod database {
                 name, salary, bonus, date
             );
 
-            self.conn.execute(
+            let _ = self.conn.execute(
                 "INSERT INTO salary (name, date, salary, bonus) VALUES (?, ?, ?, ?)",
                 params![name, date, salary, bonus],
+            );
+        }
+
+        pub fn add_debt(&self, name: String, start_date: String, end_date: String, amount: u32, interest: f32, tag: String, description: String) {
+            println!(
+                "Saving users {} start date {} end date {} amount {} interest {} tag {} description {}",
+                name, start_date, end_date, amount, interest, tag, description
+            );
+
+            let _ = self.conn.execute(
+                "INSERT INTO debt (name, start_date, end_date, amount, interest, tag, description) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                params![name, start_date, end_date, amount, interest, tag, description],
             );
         }
 

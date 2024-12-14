@@ -12,3 +12,11 @@ chrono = "0.4.39"
 
 [build-dependencies]
 slint-build = "1.8.0"
+
+[[bin]]
+name = "Doflamingo"
+path = "src/main.rs"
+
+[lib]
+name = "Doflamingo"
+path = "src/lib/lib.rs"

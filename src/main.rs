@@ -6,11 +6,9 @@ use chrono::prelude::*;
 
 slint::include_modules!();
 
-mod salary;
-use salary::salary::SalaryHandler;
-
-mod database;
-use database::database::DatabaseHandler;
+use Doflamingo::salary::salary::SalaryHandler;
+use Doflamingo::debt::debt::DebtHandler;
+use Doflamingo::database::database::DatabaseHandler;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let database_handler = DatabaseHandler::new();
