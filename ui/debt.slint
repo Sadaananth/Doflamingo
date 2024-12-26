@@ -1,4 +1,4 @@
-import { Date, DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
+import { Date, Button, VerticalBox } from "std-widgets.slint";
 import {DateText} from "widgets/date_text.slint";
 
 
@@ -6,7 +6,7 @@ export component DebtTab inherits Rectangle {
     width: 800px;
     height: 600px;
 
-    callback add_debt();
+    callback add_debt(string, string, string, string, string);
 
     VerticalLayout {
         spacing: 10px;
@@ -44,9 +44,9 @@ export component DebtTab inherits Rectangle {
                 alignment: start;
                 spacing: 5px;
                 height: 60px;
-                DateText {}
+                start_date:= DateText {}
 
-                DateText {}
+                end_date:= DateText {}
 
                 Rectangle {
                     border-width: 1px;
@@ -71,17 +71,6 @@ export component DebtTab inherits Rectangle {
                         text: "interest";
                     }
                 }
-                
-                Rectangle {
-                    border-width: 1px;
-                    border-color: grey;
-                    background: grey;
-                    border-radius: 2px;
-                    width: 60px;
-                    tag := TextInput {
-                        text: "interest";         
-                    }
-                }
 
                 Rectangle {
                     border-width: 1px;
@@ -95,6 +84,10 @@ export component DebtTab inherits Rectangle {
                 }
                 Button {
                     text: "save";
+                    clicked => {
+                        show_entry.visible = false;
+                        add_debt(start_date.date_selected, end_date.date_selected, amount.text, interest.text, description.text);
+                    }
                 }
             }
         }

@@ -7,9 +7,14 @@ pub mod database {
     }
 
     impl DatabaseHandler {
-        pub fn new() -> Self {
+        pub fn new(use_in_memory: bool) -> Self {
             DatabaseHandler {
-                conn: Connection::open_in_memory().expect("Failed to open connection"),
+                conn: if use_in_memory {
+                    Connection::open_in_memory()
+                        .expect("Failed to open connection to in memory database")
+                } else {
+                    Connection::open("user.db").expect("Failed to open connection to database")
+                },
             }
         }
         pub fn init_handler(&self) {
@@ -76,7 +81,6 @@ pub mod database {
         }
 
         pub fn get_debt(&self) -> Vec<Debt> {
-
             let mut stmt = self
                 .conn
                 .prepare("SELECT name, start_date, end_date, amount, interest, tag, description FROM debt")
@@ -101,7 +105,7 @@ pub mod database {
             data
         }
 
-        pub fn print(&self) {
+        pub fn print_salary(&self) {
             #[derive(Debug)]
             struct Salary {
                 name: String,
@@ -127,6 +131,41 @@ pub mod database {
 
             for salary in salary_iter {
                 println!("Found salary {:?}", salary.unwrap());
+            }
+        }
+
+        pub fn print_debt(&self) {
+            #[derive(Debug)]
+            struct Debt {
+                name: String,
+                start_date: String,
+                end_date: String,
+                amount: i32,
+                interest: i32,
+                tag: String,
+                description: String,
+            }
+
+            let mut stmt = self
+                .conn
+                .prepare("SELECT name, start_date, end_date, amount, interest, tag, description FROM debt")
+                .expect("Prepare  Failed");
+            let debt_iter = stmt
+                .query_map([], |row| {
+                    Ok(Debt {
+                        name: row.get(0)?,
+                        start_date: row.get(1)?,
+                        end_date: row.get(2)?,
+                        amount: row.get(3)?,
+                        interest: row.get(4)?,
+                        tag: row.get(5)?,
+                        description: row.get(6)?,
+                    })
+                })
+                .expect("Query Failed");
+
+            for debt in debt_iter {
+                println!("Found debt {:?}", debt.unwrap());
             }
         }
     }

@@ -14,6 +14,7 @@ export component AppWindow inherits Window {
     height: 600px;
 
     callback add_salary(string, int);
+    callback add_debt(string, string, string, string, string);
 
     salary := SalaryTab {
         visible: false;
@@ -25,6 +26,9 @@ export component AppWindow inherits Window {
 
     debt := DebtTab {
         visible: false;
+        add_debt(start_date, end_date, amount, interest, description) => {
+            root.add_debt(start-date, end-date, amount, interest, description);
+        }
     }
 
     homeview := HomeView {
