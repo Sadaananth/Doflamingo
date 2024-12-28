@@ -12,21 +12,20 @@ export component DateText inherits Rectangle {
         }
         TouchArea {
             clicked => {
+                debug("clicked");
                 date_picker.show();
             }
         }
     }
     date-picker := DatePickerPopup {
-        visible: false;
-
-        // x:  date_text.x + date-text.width;
-        // y: date-text.y;
+        x: root.x + 10px;
+        y: root.y + 10px;
        
         width: 360px;
         height: 524px;
         close-policy: PopupClosePolicy.no-auto-close;
-        title: "Select the date of Salary";
-        date: { year: 2024, month:11};
+        title: "Select the date";
+        date: { year: 2024, month:11, day: 1};
 
         accepted(date) => {
             date-picker.close();

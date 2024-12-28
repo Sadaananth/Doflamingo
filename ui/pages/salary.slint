@@ -1,10 +1,7 @@
 import { Date, DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
-import {DateText} from "widgets/date_text.slint";
+import {DateText} from "../widgets/date_text.slint";
 
 export component SalaryTab inherits Rectangle {
-    width: 800px;
-    height: 600px;
-
     callback add_salary(string, int);
 
     VerticalLayout {

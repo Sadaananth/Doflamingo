@@ -1,0 +1,47 @@
+import { Button } from "std-widgets.slint";
+
+export component HomeView inherits Rectangle {
+    callback enter_salary();
+    callback enter_debt();
+    callback enter_overview();
+    callback enter_about();
+
+    HorizontalLayout {
+        VerticalLayout {
+            width: 100px;
+            Button {
+                height: 100px;
+                text: "Overview";
+
+                clicked => {
+                    root.enter_overview();
+                }
+            }
+            Button {
+                height: 100px;
+                text: "Salary";
+
+                clicked => {
+                    root.enter_salary();
+                }
+            }
+            Button {
+                height: 100px;
+                text: "Debt";
+
+                clicked => {
+                    root.enter_debt();
+                }
+            }
+            Button {
+                height: 100px;
+                text: "About";
+
+                clicked => {
+                    root.enter_about();
+                }
+            }
+        }
+        Rectangle {}
+    }
+}

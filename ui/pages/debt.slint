@@ -1,0 +1,97 @@
+import { Date, Button, VerticalBox, LineEdit } from "std-widgets.slint";
+import {DateText} from "../widgets/date_text.slint";
+
+
+export component DebtTab inherits Rectangle {
+    x: 100px;
+    in-out property <float> pitch: 0.15;
+    in-out property <float> yaw: 0.5;
+
+    pure callback render_plot(/* pitch */ float, /* yaw */ float, /* amplitude */ float) -> image;
+    callback add_debt(string, string, string, string, string);
+
+    VerticalLayout {
+        spacing: 10px;
+        add_debt_btn := Button {
+            width: 100px;
+            height: 60px;
+            text: "Add debt";
+            clicked => {
+                show_entry.show();
+            }
+        }
+        show_entry := PopupWindow {
+            width: 600px;
+            height: 300px;
+            x: add_debt_btn.x + 10px;
+            y: add_debt_btn.y + add_debt_btn.height + 10px;
+            close-policy: PopupClosePolicy.close-on-click-outside;
+
+            VerticalLayout {
+                spacing: 10px;
+                HorizontalLayout {
+                    start_date:= DateText {}
+                    
+                    end_date:= DateText {}
+                    
+                    amount:= LineEdit {
+                        width: 100px;
+                        height: 60px;
+                        placeholder-text: "Amount";
+                    }
+                    interest:= LineEdit {
+                        width: 100px;
+                        height: 60px;
+                        placeholder-text: "Interest";
+                    }
+                    desc:= LineEdit {
+                        width: 100px;
+                        height: 60px;
+                        placeholder-text: "Description";
+                    }
+                }
+                HorizontalLayout {
+                    Button {
+                        width: 100px;
+                        height: 60px;
+                        text: "Save debt";
+                        clicked => {
+                            root.add_debt(start_date.date_selected, end_date.date_selected, amount.text, interest.text, desc.text);
+                            show_entry.close();
+                        }
+                    }
+                    Button {
+                        width: 100px;
+                        height: 60px;
+                        text: "Cancel";
+
+                        clicked => {
+                            show_entry.close();
+                        }
+                    }
+                }
+            }
+            Image {
+                source: root.render_plot(root.pitch, root.yaw, 50 / 10);
+                touch := TouchArea {
+                    property <float> pressed-pitch;
+                    property <float> pressed-yaw;
+    
+                    pointer-event(event) => {
+                        if (event.button == PointerEventButton.left && event.kind == PointerEventKind.down) {
+                            self.pressed-pitch = root.pitch;
+                            self.pressed-yaw = root.yaw;
+                        }
+                    }
+                    moved => {
+                        if (self.enabled && self.pressed) {
+                            root.pitch = self.pressed-pitch + (touch.mouse-y - touch.pressed-y) / self.height * 3.14;
+                            root.yaw = self.pressed-yaw - (touch.mouse-x - touch.pressed-x) / self.width * 3.14;
+                        }
+                    }
+                    mouse-cursor: self.pressed ? MouseCursor.grabbing : MouseCursor.grab;
+                }
+            }
+        }
+    }
+}
