@@ -1,9 +1,11 @@
 import { Date, DatePickerPopup, Button, VerticalBox } from "std-widgets.slint";
-import {DebtTab} from "pages/debt.slint";
-import {SalaryTab} from "pages/salary.slint";
-import {OverviewTab} from "pages/overview.slint";
-import {AboutTab} from "pages/about.slint";
+
 import {HomeView} from "pages/home.slint";
+import {OverviewTab} from "pages/overview.slint";
+import {SalaryTab} from "pages/salary.slint";
+import {ExpenseTab} from "pages/expense.slint";
+import {DebtTab} from "pages/debt.slint";
+import {AboutTab} from "pages/about.slint";
 
 export global Data {
     in-out property <int> today: 23;
@@ -17,6 +19,7 @@ export component AppWindow inherits Window {
     callback add_salary(string, int);
     callback add_debt(string, string, string, string, string);
     pure callback render_plot(/* pitch */ float, /* yaw */ float, /* amplitude */ float) -> image;
+    callback load_file();
 
     overview := OverviewTab {
         visible: true;
@@ -27,6 +30,14 @@ export component AppWindow inherits Window {
 
         add_salary(date_set, salary_set) => {
             root.add_salary(date_set, salary_set);
+        }
+    }
+
+    expense := ExpenseTab {
+        visible: false;
+
+        load_file() => {
+            load_file();
         }
     }
 
@@ -49,24 +60,35 @@ export component AppWindow inherits Window {
         enter_overview => {
             overview.visible = true;
             salary.visible = false;
+            expense.visible = false;
+            debt.visible = false;
+            about.visible = false;
+        }
+        enter_expense => {
+            expense.visible = true;
+            salary.visible = false;
+            overview.visible = false;
             debt.visible = false;
             about.visible = false;
         }
         enter_salary => {
             salary.visible = true;
             overview.visible = false;
+            expense.visible = false;
             debt.visible = false;
             about.visible = false;
         }
         enter_debt => {
             debt.visible = true;
             salary.visible = false;
+            expense.visible = false;
             overview.visible = false;
             about.visible = false;
         }
         enter_about => {
             about.visible = true;
             salary.visible = false;
+            expense.visible = false;
             overview.visible = false;
             debt.visible = false;
         }

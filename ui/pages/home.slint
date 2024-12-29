@@ -1,9 +1,10 @@
 import { Button } from "std-widgets.slint";
 
 export component HomeView inherits Rectangle {
-    callback enter_salary();
-    callback enter_debt();
     callback enter_overview();
+    callback enter_salary();
+    callback enter_expense();
+    callback enter_debt();
     callback enter_about();
 
     HorizontalLayout {
@@ -20,9 +21,18 @@ export component HomeView inherits Rectangle {
             Button {
                 height: 100px;
                 text: "Salary";
+                // TODO: change this to income
 
                 clicked => {
                     root.enter_salary();
+                }
+            }
+            Button {
+                height: 100px;
+                text: "Expense";
+
+                clicked => {
+                    root.enter_expense();
                 }
             }
             Button {

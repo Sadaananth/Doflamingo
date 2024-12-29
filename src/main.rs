@@ -4,6 +4,7 @@ use chrono::prelude::*;
 use duckdb::Result;
 use std::error::Error;
 use std::rc::Rc;
+use rfd::FileDialog;
 
 slint::include_modules!();
 use plotters::prelude::*;
@@ -115,6 +116,15 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
     ui.on_render_plot(render_plot);
+    ui.on_load_file({
+        move || {
+            let files = FileDialog::new()
+            .add_filter("text", &["txt", "rs"])
+            .add_filter("rust", &["rs", "toml"])
+            .set_directory("/")
+            .pick_file();
+        }
+    });
     ui.run()?;
 
     Ok(())
