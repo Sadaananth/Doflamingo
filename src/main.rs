@@ -84,6 +84,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let today = Local::now();
     let ui = AppWindow::new()?;
+    ui.window().set_maximized(true);
     ui.global::<Data>().set_this_year(today.year());
     ui.global::<Data>()
         .set_this_month(today.month().try_into().unwrap());
