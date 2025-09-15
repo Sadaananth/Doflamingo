@@ -1,4 +1,4 @@
-#include "my_application_ui.h"
+#include "app-window.h"
 
 int main(int argc, char **argv)
 {

@@ -1,22 +1,16 @@
 add_subdirectory(core)
 
-cmake_minimum_required(VERSION 3.21)
-project(my_application LANGUAGES CXX)
+find_package(Slint REQUIRED)
 
-# Note: Use find_package(Slint) instead of the following three commands,
-# if you prefer the package approach.
-include(FetchContent)
-FetchContent_Declare(
-    Slint
-    GIT_REPOSITORY https://github.com/slint-ui/slint.git
-    # `release/1` will auto-upgrade to the latest Slint >= 1.0.0 and < 2.0.0
-    # `release/1.0` will auto-upgrade to the latest Slint >= 1.0.0 and < 1.1.0
-    GIT_TAG release/1
-    SOURCE_SUBDIR api/cpp
-)
-FetchContent_MakeAvailable(Slint)
+set(CMAKE_INSTALL_RPATH "/usr/local/lib;~/tools/Slint-cpp-1.13.1-Linux-x86_64/lib")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+get_target_property(slint_enabled_features Slint::Slint SLINT_ENABLED_FEATURES)
+if ("BACKEND_WINIT" IN_LIST slint_enabled_features)
+    message("WINIT supported")
+endif()
 
 add_executable(Doflamingo main.cpp)
-slint_target_sources(my_application my_application_ui.slint)
-target_link_libraries(my_application PRIVATE Slint::Slint)
+slint_target_sources(Doflamingo ../ui/app-window.slint)
+target_link_libraries(Doflamingo PRIVATE Slint::Slint)
 
