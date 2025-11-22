@@ -36,6 +36,11 @@
       <string>Debt</string>
      </attribute>
     </widget>
+    <widget class="QWidget" name="incomeTab">
+     <attribute name="title">
+      <string>Income</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

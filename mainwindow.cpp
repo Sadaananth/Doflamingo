@@ -6,7 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("Doflamingo - Investment and Portfolio Manager");
     debt_widget = new DebtWidget(ui->debtTab);
+    income_widget = new IncomeWidget(ui->incomeTab);
 }
 
 MainWindow::~MainWindow()

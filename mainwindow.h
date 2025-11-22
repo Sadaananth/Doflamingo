@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "debtwidget.h"
+#include "incomewidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,5 +26,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     DebtWidget* debt_widget;
+    IncomeWidget* income_widget;
 };
 #endif // MAINWINDOW_H
